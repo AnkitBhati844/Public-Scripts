@@ -58,7 +58,7 @@ exports.handler = function(event, context) {
     var uploadParams = {
         // @TODO: enter your s3 bucket name:
         Bucket: 'ses-logs-allsites',
-        Key: 'ses/' + Domain + '/' + year + '/' + month + '/' + date + '/' + timestamp + '.'+ AccountId + '.'+ SourceIP + '.' + emailAddress + ".txt" ,
+        Key: 'ses/' + Domain + '/' + year + '/' + month + '/' + date + '/' + timestamp + '-'+ AccountId + '-'+ SourceIP + '-' + emailAddress + ".txt" ,
         Body: '[' + SnsPublishTime + '][' + Domain + '][' + MessageId + '][' + MessageType + ']' + "\n" + metadata + "\n"+ JSON.stringify(Message)
     };
 
