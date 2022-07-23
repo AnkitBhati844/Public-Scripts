@@ -15,7 +15,8 @@ exports.handler = function(event, context) {
     var emailAddress = Message.mail.destination;
     var AccountId = Message.mail.sendingAccountId;
     var SourceIP = Message.mail.sourceIp;
- 
+    var SourceArn = Message.mail.sourceArn;
+    var Domain = SourceArn.replace(/^.*identity\/(.*)$/gi, '$1');
     var DestinationAddress = Message.mail.destination.toString();
     var dateObj = new Date();
     var month = ('0' + (dateObj.getMonth() + 1)).slice(-2);
@@ -57,7 +58,7 @@ exports.handler = function(event, context) {
     var uploadParams = {
         // @TODO: enter your s3 bucket name:
         Bucket: 'ses-logs-allsites',
-        Key: 'ses/' + Domain + '/' + year + '/' + month + '/' + date + '/' + timestamp + '-'+ AccountId + '-'+ SourceIP + '-' + emailAddress + ".txt" ,
+        Key: 'ses/' + Domain + '/' + year + '/' + month + '/' + date + '/' + timestamp + '.'+ AccountId + '.'+ SourceIP + '.' + emailAddress + ".txt" ,
         Body: '[' + SnsPublishTime + '][' + Domain + '][' + MessageId + '][' + MessageType + ']' + "\n" + metadata + "\n"+ JSON.stringify(Message)
     };
 
